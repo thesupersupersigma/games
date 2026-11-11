@@ -41,7 +41,8 @@ nginx.conf         static serving, gzip, caching, /healthz
    python -m http.server 5173 --bind 127.0.0.1
    ```
    then open `http://127.0.0.1:5173/<game-name>/`.
-7. Commit and push. Coolify rebuilds on push.
+7. Add an entry to `public/games.json` so it shows up on the landing page. Only `id`, `title` and `path` are required; `cover`, `icon`, `tagline`, `tags` and `accent` are optional (the full schema is at the top of `public/assets/js/cards.js`).
+8. Commit and push. Coolify rebuilds on push.
 
 ## Local Docker test
 
@@ -54,3 +55,11 @@ docker run --rm -p 127.0.0.1:5173:80 games
 
 - Keep files under 100 MB each (GitHub's hard limit). For anything bigger, use Git LFS.
 - These games belong to their original creators. Keep the repo private.
+
+## Landing page
+
+`public/index.html` plus `public/assets/` (plain HTML/CSS/JS modules, no build step). It builds the game grid from `public/games.json`.
+
+nginx caches CSS and JS for 7 days, so after changing anything in `public/assets/`, bump every `?v=` number in `public/index.html` (they must all match). `main.js` passes that number on to every module it loads.
+
+For JavaScript-off visitors there is a hand-written game list inside the `<noscript>` block in `index.html`; add new games there too.

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "polytrack",
+    "title": "PolyTrack",
+    "path": "polytrack/",
+    "cover": "polytrack/images/official_tracks.jpg",
+    "tagline": "Low-poly racing with a track editor",
+    "tags": ["racing", "3d", "track editor"],
+    "accent": "#5ee1ff"
+  },
+  {
+    "id": "stacktris",
+    "title": "Stacktris",
+    "path": "stacktris/",
+    "cover": "stacktris/webapp/cover.jpg",
+    "tagline": "Stack falling blocks without toppling the tower",
+    "tags": ["puzzle", "physics"],
+    "accent": "#ffb347"
+  }
+]

@@ -1,0 +1,92 @@
+/* layout.css: stacking order of the layers, page sections, grid, breakpoints. */
+
+/* Layer order (back to front):
+   0 #bg shader  ·  1 #fx particles  ·  2 grain + scanlines  ·  3 #app content
+   50 overlays (settings, palette)  ·  200 #launch  ·  300 #intro  ·  400 toast/hud  ·  900 cursor */
+#bg, #fx { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+#bg { z-index: 0; }
+#fx { z-index: 1; }
+#app { position: relative; z-index: 3; min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; }
+main { flex: 1; }
+
+.topbar, .hero, .games, .footer {
+  width: 100%;
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: clamp(16px, 4vw, 44px);
+}
+
+/* ---------- top bar ---------- */
+.topbar {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding-block: 14px;
+  max-width: none;
+  background: linear-gradient(rgb(5 6 13 / .82), rgb(5 6 13 / 0));
+}
+.topbar-actions { display: flex; align-items: center; gap: 8px; }
+
+/* ---------- hero ---------- */
+.hero {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  gap: clamp(14px, 2.4vh, 26px);
+  padding-block: clamp(40px, 10vh, 120px) clamp(36px, 7vh, 80px);
+}
+.hero-cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.stats {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px;
+  width: min(100%, 760px);
+  margin-top: clamp(6px, 2vh, 20px);
+}
+
+/* ---------- games ---------- */
+.games { padding-block: 8px clamp(48px, 9vh, 110px); }
+.games-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 14px 24px; }
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; flex: 1 1 300px; justify-content: flex-end; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.count { margin-top: 14px; min-height: 1.3em; }
+
+.grid {
+  display: grid;
+  /* auto-fit + a max track size: a couple of games sit centred at a sensible size
+     instead of stretching across an ultrawide monitor. */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 460px));
+  justify-content: center;
+  gap: clamp(16px, 2.4vw, 28px);
+  margin-top: 18px;
+}
+.grid-state { margin-top: 18px; display: grid; place-items: center; }
+
+.footer { padding-block: 28px 40px; text-align: center; color: var(--dim); font-size: .9rem; }
+.footer p + p { margin-top: 6px; }
+
+/* ---------- overlays ---------- */
+.overlay {
+  position: fixed; inset: 0; z-index: 50;
+  display: flex; padding: clamp(12px, 3vw, 28px);
+  background: rgb(3 4 10 / .62);
+}
+.overlay-right { justify-content: flex-end; align-items: stretch; }
+.overlay-top { justify-content: center; align-items: flex-start; padding-top: min(16vh, 140px); }
+
+#launch { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 24px; text-align: center; }
+#intro { position: fixed; inset: 0; z-index: 300; display: none; place-items: center; padding: 24px; }
+html.intro-pending #intro { display: grid; }
+html.intro-pending body { overflow: hidden; }
+
+#toast { position: fixed; left: 50%; bottom: max(22px, env(safe-area-inset-bottom)); z-index: 400; }
+#hud { position: fixed; left: 12px; bottom: 12px; z-index: 400; }
+
+/* ---------- breakpoints ---------- */
+@media (max-width: 640px) {
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .btn-label, #palette-kbd { display: none; }
+  .controls { justify-content: stretch; }
+  .controls .search { flex: 1 1 100%; }
+  .overlay-right { padding: 0; align-items: flex-end; }
+  .logo-text { display: none; }
+}
+@media (min-width: 1900px) {
+  .hero, .games, .footer { max-width: 1560px; }
+  .grid { grid-template-columns: repeat(auto-fit, minmax(340px, 520px)); }
+}
