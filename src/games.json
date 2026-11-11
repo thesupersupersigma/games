@@ -20,7 +20,7 @@
   {
     "id": "rustyac",
     "title": "rustyAC",
-    "path": "https://trustyac.com/play/app",
+    "path": "https://rustyac.com/play/app",
     "cover": "https://raw.githubusercontent.com/thesupersupersigma/thesupersupersigma.com/refs/heads/master/src/public/rustyACGrokNOBG.png",
     "tagline": "1:1 rust port of Assetto Corsa",
     "tags": ["racing", "3d"],
