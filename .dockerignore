@@ -1,0 +1,5 @@
+.git
+ignored
+tools
+**/node_modules
+**/.git
