@@ -16,5 +16,14 @@
     "tagline": "Stack falling blocks without toppling the tower",
     "tags": ["puzzle", "physics"],
     "accent": "#ffb347"
+  },
+  {
+    "id": "rustyac",
+    "title": "rustyAC",
+    "path": "https://trustyac.com/play/app",
+    "cover": "https://raw.githubusercontent.com/thesupersupersigma/thesupersupersigma.com/refs/heads/master/src/public/rustyACGrokNOBG.png",
+    "tagline": "1:1 rust port of Assetto Corsa",
+    "tags": ["racing", "3d"],
+    "accent": "#ff1b17"
   }
 ]

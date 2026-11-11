@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>thesupersupersigma games</title>
+  <meta name="description" content="Browser games hosted by thesupersupersigma. No ads, no accounts, nothing to install.">
+  <meta name="theme-color" content="#f2f0e9">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="thesupersupersigma games">
+  <meta property="og:description" content="Browser games with no ads, no accounts and nothing to install.">
+  <meta property="og:image" content="polytrack/images/official_tracks.jpg">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%232a35f0'/%3E%3Crect x='9' y='9' width='14' height='14' fill='%23f2f0e9'/%3E%3C/svg%3E">
+
+  <script>
+    /* Hides the page until src/main.ts is ready to animate it in, so nothing flashes.
+       Skipped for reduced motion. The timer shows the page anyway if the script never loads. */
+    if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+      document.documentElement.classList.add('pre');
+      setTimeout(function () { document.documentElement.classList.remove('pre'); }, 3000);
+    }
+  </script>
+  <noscript><style>.bar-pick { display: none }</style></noscript>
+</head>
+<body>
+  <a class="skip" href="#games">Skip to games</a>
+
+  <header class="bar">
+    <a class="bar-mark" href="./">tsss/games</a>
+    <p class="bar-note"><!--count--> so far</p>
+    <button class="bar-pick" id="pick" type="button">Pick one for me</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1 class="hero-title display">
+        <span class="hero-line">thesupersupersigma</span>
+        <span class="hero-line hero-games">games</span>
+      </h1>
+      <p class="hero-lede">A few browser games in one place. Click one and it starts.</p>
+    </section>
+
+    <!-- Decorative. src/main.ts repeats the line and scrolls it. -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <p class="ticker-set"><span>No ads</span><span>No accounts</span><span>Nothing to install</span><span>Runs in your browser</span></p>
+      </div>
+    </div>
+
+    <ol class="shelf" id="games" aria-label="Games">
+      <!--games-->
+    </ol>
+  </main>
+
+  <footer class="foot">
+    <p>Hosted by thesupersupersigma.</p>
+    <p>Every game here belongs to the people who made it.</p>
+  </footer>
+
+  <!-- Slides up over the page while a game loads. -->
+  <div class="curtain" aria-hidden="true">
+    <p class="curtain-label">Loading</p>
+    <p class="curtain-title display"><span></span></p>
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

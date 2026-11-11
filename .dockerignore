@@ -3,3 +3,4 @@ ignored
 tools
 **/node_modules
 **/.git
+dist

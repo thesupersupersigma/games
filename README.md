@@ -13,10 +13,11 @@ Each game lives in its own folder under `public/` and is served at `/<folder>/`:
 ## Layout
 
 ```
-public/<game>/     everything that gets served (one folder per game)
+public/<game>/     the games, one folder each (copied into the image as they are)
+index.html, src/   the landing page (TypeScript, built with Vite)
 tools/             helper scripts (not shipped in the image)
 ignored/           scratch space, HAR captures, tarballs (git-ignored)
-Dockerfile         nginx:alpine + public/
+Dockerfile         builds the landing page, then nginx:alpine serves dist/
 nginx.conf         static serving, gzip, caching, /healthz
 ```
 
@@ -41,7 +42,7 @@ nginx.conf         static serving, gzip, caching, /healthz
    python -m http.server 5173 --bind 127.0.0.1
    ```
    then open `http://127.0.0.1:5173/<game-name>/`.
-7. Add an entry to `public/games.json` so it shows up on the landing page. Only `id`, `title` and `path` are required; `cover`, `icon`, `tagline`, `tags` and `accent` are optional (the full schema is at the top of `public/assets/js/cards.js`).
+7. Add an entry to `src/games.json` so it shows up on the landing page. Only `id`, `title` and `path` are required; `cover`, `tagline`, `tags` and `accent` are optional (they are described in `src/games.ts`). `path` can also be a full `https://` URL for a game hosted somewhere else.
 8. Commit and push. Coolify rebuilds on push.
 
 ## Local Docker test
@@ -58,8 +59,25 @@ docker run --rm -p 127.0.0.1:5173:80 games
 
 ## Landing page
 
-`public/index.html` plus `public/assets/` (plain HTML/CSS/JS modules, no build step). It builds the game grid from `public/games.json`.
+`index.html` plus `src/`, written in TypeScript and built by [Vite](https://vite.dev). Animation is [GSAP](https://gsap.com). You need Node 22.18 or newer.
 
-nginx caches CSS and JS for 7 days, so after changing anything in `public/assets/`, bump every `?v=` number in `public/index.html` (they must all match). `main.js` passes that number on to every module it loads.
+```
+npm install        once
+npm run dev        work on the landing page with live reload
+npm run build      type-check, then write the finished site to dist/
+npm run preview    serve dist/ exactly as nginx will (use this to click through to the games)
+npm test           check the code that turns games.json into HTML
+```
 
-For JavaScript-off visitors there is a hand-written game list inside the `<noscript>` block in `index.html`; add new games there too.
+| File              | What it does                                                        |
+|-------------------|---------------------------------------------------------------------|
+| `index.html`      | the page; `<!--games-->` is replaced by the game list at build time |
+| `src/games.json`  | the list of games                                                   |
+| `src/games.ts`    | turns that list into HTML                                           |
+| `src/style.css`   | how it looks                                                        |
+| `src/main.ts`     | everything that moves                                               |
+| `vite.config.ts`  | wires `games.json` into `index.html`                                |
+
+In `npm run dev` the links to the games open the landing page again, because the dev server does not serve `public/<game>/index.html` for a folder URL. `npm run preview` and the real site do.
+
+Built files get a new name whenever they change, so there are no `?v=` numbers to bump any more.

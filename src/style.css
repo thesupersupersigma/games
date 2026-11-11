@@ -1,0 +1,221 @@
+/* Look: a printed catalogue. Paper, black ink, one spot colour, hard edges.
+   Each game brings its own --accent (from games.json), which fills its row on hover. */
+
+:root {
+  --paper: #f2f0e9;
+  --ink: #111;
+  --spot: #2a35f0;
+  --gutter: clamp(1rem, 3vw, 2.5rem);
+  --rule: 2px solid var(--ink);
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+html.pre body { visibility: hidden; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 1.0625rem/1.5 'Archivo Variable', system-ui, sans-serif;
+  overflow-x: clip;
+}
+
+::selection { background: var(--spot); color: var(--paper); }
+:focus-visible { outline: 3px solid var(--spot); outline-offset: 3px; }
+
+/* The big type: Archivo squeezed to its narrowest width at its heaviest weight. */
+.display {
+  margin: 0;
+  font-weight: 900;
+  font-stretch: 62%;
+  line-height: 0.82;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+/* Small capital labels. */
+.bar, .tags, .game-go, .game-host, .game-no, .curtain-label, .ticker-set {
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.skip {
+  position: absolute;
+  left: var(--gutter);
+  top: -4rem;
+  z-index: 20;
+  padding: 0.75rem 1rem;
+  background: var(--ink);
+  color: var(--paper);
+}
+.skip:focus { top: 0.5rem; }
+
+/* ---------------------------------------------------------------- top bar */
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem var(--gutter);
+  border-bottom: var(--rule);
+  font-size: 0.8125rem;
+}
+.bar p { margin: 0; }
+.bar-mark { color: inherit; text-decoration: none; padding-block: 0.75rem; }
+.bar-pick {
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  border: 0;
+  border-radius: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+.bar-pick:hover { background: var(--spot); }
+
+/* ------------------------------------------------------------------- hero */
+.hero {
+  position: relative;
+  container-type: inline-size;
+  padding: clamp(1.5rem, 4vw, 3.5rem) var(--gutter) var(--gutter);
+}
+/* 8.65 = how many font-sizes wide "THESUPERSUPERSIGMA" is, so the line exactly fills the hero. */
+.hero-title { font-size: calc(100cqw / 8.65); }
+.hero-line { display: block; white-space: nowrap; }
+/* The long word is squeezed, the short one is stretched. */
+.hero-games { font-stretch: 125%; color: var(--spot); }
+.hero-lede {
+  max-width: 22rem;
+  margin: 1.5rem 0 0;
+  font-size: 1.125rem;
+  line-height: 1.4;
+}
+
+/* ----------------------------------------------------------------- ticker */
+.ticker { overflow: clip; background: var(--spot); color: var(--paper); border-block: var(--rule); }
+.ticker-track { display: flex; width: max-content; }
+.ticker-set { flex: none; margin: 0; padding: 0.7rem 0; font-size: 0.875rem; white-space: nowrap; }
+.ticker-set span { display: inline-flex; align-items: center; }
+.ticker-set span::after {
+  content: '';
+  width: 0.5em;
+  height: 0.5em;
+  margin-inline: 1.5rem;
+  background: var(--ink);
+}
+
+/* ------------------------------------------------------------------ games */
+.shelf { margin: 0; padding: 0; list-style: none; }
+.game { border-bottom: var(--rule); }
+.game-link {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  column-gap: var(--gutter);
+  padding: clamp(1.75rem, 4vw, 3rem) var(--gutter);
+  color: inherit;
+  text-decoration: none;
+}
+.game-link:focus-visible { outline-offset: -8px; }
+
+/* The accent colour that fills the row. Without motion it simply switches on;
+   src/main.ts animates it instead when motion is allowed. */
+.game-wipe {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--accent);
+  transform: scaleY(0);
+}
+.game-link:is(:hover, :focus-visible, :active) .game-wipe { transform: scaleY(1); }
+
+.game-no { padding-top: 0.3rem; font-size: 0.875rem; font-variant-numeric: tabular-nums; }
+.game-title, .game-tagline, .game-foot, .game-cover { grid-column: 2; }
+.game-title { font-size: clamp(3.5rem, 10vw, 9.5rem); }
+.game-tagline { max-width: 36ch; margin: 1rem 0 0; font-size: 1.125rem; line-height: 1.35; text-wrap: balance; }
+.game-host { font-size: 0.75rem; }
+.game-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.25rem; margin-top: 1.5rem; }
+.game-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 2.75rem;
+  padding: 0 1.1rem;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.875rem;
+}
+.tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0; padding: 0; list-style: none; font-size: 0.75rem; }
+.tags li { padding: 0.2rem 0.55rem; border: 1.5px solid var(--ink); }
+
+/* Covers come in any shape (a wide banner, a small square), so the height is fixed
+   and the width follows the picture, up to a limit. */
+.game-cover {
+  justify-self: start;
+  width: auto;
+  max-width: 100%;
+  height: 10rem;
+  margin-top: 2rem;
+  object-fit: cover;
+  border: var(--rule);
+  box-shadow: 0.5rem 0.5rem 0 var(--ink);
+}
+
+/* ----------------------------------------------------------------- footer */
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 2rem;
+  padding: 2rem var(--gutter) 3rem;
+  font-size: 0.875rem;
+}
+.foot p { margin: 0; }
+
+/* ---------------------------------------------------------------- curtain */
+.curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  visibility: hidden;
+  display: grid;
+  align-content: end;
+  gap: 1rem;
+  padding: var(--gutter);
+  background: var(--accent, var(--spot));
+}
+.curtain-label { margin: 0; font-size: 0.875rem; }
+.curtain-title { overflow: clip; font-size: clamp(4rem, 19vw, 17rem); }
+.curtain-title span { display: block; }
+
+/* ------------------------------------------------------------ wide screens */
+@media (max-width: 43.99rem) {
+  .bar-note { display: none; }
+  /* 1.78 = the size at which "GAMES" is as wide as the line above it. */
+  .hero-games { font-size: 1.78em; }
+}
+
+@media (min-width: 44rem) {
+  .hero-lede { position: absolute; right: var(--gutter); bottom: var(--gutter); width: 30%; margin: 0; }
+
+  .game-link { grid-template-columns: 4rem minmax(0, 1fr) auto; }
+  .game-cover {
+    grid-column: 3;
+    grid-row: 1 / span 3;
+    align-self: center;
+    justify-self: end;
+    max-width: min(26rem, 34vw);
+    height: 12.5rem;
+    margin-top: 0;
+  }
+}
