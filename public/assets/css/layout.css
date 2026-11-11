@@ -22,7 +22,8 @@ main { flex: 1; }
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   padding-block: 14px;
   max-width: none;
-  background: linear-gradient(rgb(5 6 13 / .82), rgb(5 6 13 / 0));
+  /* solid behind the buttons, fading out below them, so scrolled content never fights the controls */
+  background: linear-gradient(rgb(5 6 13 / .94) 45%, rgb(5 6 13 / 0));
 }
 .topbar-actions { display: flex; align-items: center; gap: 8px; }
 
@@ -30,34 +31,31 @@ main { flex: 1; }
 .hero {
   display: flex; flex-direction: column; align-items: center; text-align: center;
   gap: clamp(14px, 2.4vh, 26px);
-  padding-block: clamp(40px, 10vh, 120px) clamp(36px, 7vh, 80px);
+  /* kept short on purpose: the games heading must be visible without scrolling on a 720px-tall screen */
+  padding-block: clamp(24px, 6vh, 88px) clamp(28px, 5vh, 64px);
 }
 .hero-cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
-.stats {
-  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px;
-  width: min(100%, 760px);
-  margin-top: clamp(6px, 2vh, 20px);
-}
 
 /* ---------- games ---------- */
-.games { padding-block: 8px clamp(48px, 9vh, 110px); }
+/* 1036px = two 460px cards + gap + side padding, so the heading and filters line up with the cards */
+.games { max-width: 1036px; padding-block: 8px clamp(48px, 9vh, 110px); }
 .games-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 14px 24px; }
 .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; flex: 1 1 300px; justify-content: flex-end; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-.count { margin-top: 14px; min-height: 1.3em; }
+/* the count shares the heading's text baseline; the controls stay bottom-aligned */
+.games-head h2, .count { align-self: baseline; }
 
 .grid {
   display: grid;
-  /* auto-fit + a max track size: a couple of games sit centred at a sensible size
-     instead of stretching across an ultrawide monitor. */
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 460px));
-  justify-content: center;
+  /* Tracks share the row equally; .card's max-width (below) stops a lone card stretching. */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: clamp(16px, 2.4vw, 28px);
   margin-top: 18px;
 }
 .grid-state { margin-top: 18px; display: grid; place-items: center; }
 
 .footer { padding-block: 28px 40px; text-align: center; color: var(--dim); font-size: .9rem; }
+.stats { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 26px; margin-bottom: 18px; }
 .footer p + p { margin-top: 6px; }
 
 /* ---------- overlays ---------- */
@@ -79,14 +77,15 @@ html.intro-pending body { overflow: hidden; }
 
 /* ---------- breakpoints ---------- */
 @media (max-width: 640px) {
-  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .btn-label, #palette-kbd { display: none; }
   .controls { justify-content: stretch; }
-  .controls .search { flex: 1 1 100%; }
+  .controls .search { flex: 1 1 160px; max-width: none; }
   .overlay-right { padding: 0; align-items: flex-end; }
   .logo-text { display: none; }
 }
+@media (min-width: 641px) { .card { max-width: 460px; } }
 @media (min-width: 1900px) {
-  .hero, .games, .footer { max-width: 1560px; }
-  .grid { grid-template-columns: repeat(auto-fit, minmax(340px, 520px)); }
+  .hero, .footer { max-width: 1560px; }
+  .games { max-width: 1156px; }
+  .card { max-width: 520px; }
 }

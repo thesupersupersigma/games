@@ -20,10 +20,10 @@
     bump every ?v= number on this page (they must all match). main.js passes its own
     ?v= on to every module it loads, so this page is the only place to change.
   -->
-  <link rel="stylesheet" href="assets/css/base.css?v=1">
-  <link rel="stylesheet" href="assets/css/layout.css?v=1">
-  <link rel="stylesheet" href="assets/css/components.css?v=1">
-  <link rel="stylesheet" href="assets/css/effects.css?v=1">
+  <link rel="stylesheet" href="assets/css/base.css?v=2">
+  <link rel="stylesheet" href="assets/css/layout.css?v=2">
+  <link rel="stylesheet" href="assets/css/components.css?v=2">
+  <link rel="stylesheet" href="assets/css/effects.css?v=2">
 
   <script>
     /* Runs before first paint: applies saved theme/motion/quality (no flash) and decides
@@ -85,17 +85,12 @@
           <a class="btn btn-primary" href="#games" data-magnetic>pick a game <span aria-hidden="true">↓</span></a>
           <button class="btn" id="random" type="button" data-magnetic>surprise me</button>
         </div>
-        <dl class="stats reveal" style="--d:5">
-          <div><dt>local time</dt><dd><time id="clock">--:--:--</time></dd></div>
-          <div><dt>players online</dt><dd><span id="players">1</span> <small>(it's you)</small></dd></div>
-          <div><dt>you've been here</dt><dd id="uptime">0:00</dd></div>
-          <div><dt>frame rate</dt><dd id="fps">--</dd></div>
-        </dl>
       </section>
 
       <section class="games" id="games" aria-labelledby="games-title">
         <div class="games-head reveal" style="--d:6">
           <h2 id="games-title">the games</h2>
+          <p class="count" id="count" aria-live="polite"></p>
           <div class="controls">
             <label class="search">
               <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -106,7 +101,6 @@
           </div>
         </div>
         <div class="chips reveal" style="--d:7" id="chips" role="group" aria-label="Filter by tag"></div>
-        <p class="count" id="count" aria-live="polite"></p>
         <div class="grid" id="grid"></div>
         <div class="grid-state" id="grid-state" hidden></div>
         <noscript>
@@ -120,6 +114,12 @@
     </main>
 
     <footer class="footer reveal" style="--d:8">
+      <dl class="stats">
+        <div><dt>local time</dt><dd><time id="clock">--:--:--</time></dd></div>
+        <div><dt>players online</dt><dd><span id="players">1</span> <small>(it's you)</small></dd></div>
+        <div><dt>you've been here</dt><dd id="uptime">0:00</dd></div>
+        <div><dt>frame rate</dt><dd id="fps">--</dd></div>
+      </dl>
       <p>built with an unreasonable amount of javascript by <b>thesupersupersigma</b></p>
       <p class="hint">there are secrets in here. the console knows more.</p>
     </footer>
@@ -130,7 +130,7 @@
     <aside class="panel" role="dialog" aria-modal="true" aria-labelledby="settings-title">
       <header class="panel-head">
         <h2 id="settings-title">settings</h2>
-        <button class="icon-btn" type="button" data-close aria-label="Close settings">✕</button>
+        <button class="icon-btn" type="button" data-close aria-label="Close settings"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
       </header>
       <label class="row"><span>reduce motion<small>stops the intro, shader, tilt and particles</small></span><input class="switch" type="checkbox" id="set-reduce"></label>
       <label class="row"><span>sound effects<small>synthesised live, no audio files</small></span><input class="switch" type="checkbox" id="set-sound"></label>
@@ -189,6 +189,6 @@
   <div id="toast" role="status" aria-live="polite"></div>
   <div id="hud" hidden aria-hidden="true"></div>
 
-  <script type="module" src="assets/js/main.js?v=1"></script>
+  <script type="module" src="assets/js/main.js?v=2"></script>
 </body>
 </html>

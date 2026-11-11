@@ -55,7 +55,7 @@ html.ready .card.is-entering { animation: card-in .8s var(--ease) both; animatio
   animation: grain .9s steps(1) infinite; /* moves the layer on the compositor, no repaint */
 }
 .scan {
-  position: fixed; inset: 0; z-index: 2; pointer-events: none; opacity: .28;
+  position: fixed; inset: 0; z-index: 2; pointer-events: none; opacity: .16;
   background: repeating-linear-gradient(0deg, rgb(0 0 0 / .5) 0 1px, transparent 1px 3px);
 }
 
