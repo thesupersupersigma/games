@@ -25,5 +25,14 @@
     "tagline": "Stack falling blocks without toppling the tower",
     "tags": ["puzzle", "physics"],
     "accent": "#ffb347"
+  },
+  {
+    "id": "ztype",
+    "title": "ZType",
+    "path": "ztype/",
+    "cover": "ztype/cover.jpg",
+    "tagline": "Type the words on the falling ships before they reach you",
+    "tags": ["typing", "arcade"],
+    "accent": "#ff9d2e"
   }
 ]

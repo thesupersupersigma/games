@@ -9,6 +9,7 @@ Each game lives in its own folder under `public/` and is served at `/<folder>/`:
 |-----------|---------------------|---------------|--------------------------------------------|
 | PolyTrack | `public/polytrack/` | `/polytrack/` | v0.5.2 unofficial build; leaderboards use an external backend |
 | Stacktris | `public/stacktris/` | `/stacktris/` | Fancade web build (Emscripten wasm)        |
+| ZType     | `public/ztype/`     | `/ztype/`     | Typing.com build (Impact.js); regenerated EMP sound and music |
 
 ## Layout
 

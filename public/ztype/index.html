@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ZType</title>
+  <meta name="description" content="Type the words on the falling ships before they reach you.">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" href="media/title/ship.png">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: #000;
+      overflow: hidden;
+    }
+    #game {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+    }
+    /* The game draws at 480x720. Let the browser scale that up or down,
+       but keep the 2:3 shape and stay inside the window. */
+    #game canvas {
+      display: block;
+      width: min(100vw, 66.6667vh, 640px) !important;
+      height: auto !important;
+      background: #000;
+      touch-action: none;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="game"></div>
+
+  <script src="app.min.746.js"></script>
+  <script>
+    // Impact's modules only run once the DOM is ready, so wait for load before
+    // starting the game. The game registers itself on bootstrapGlobals, same as
+    // it does on typing.com.
+    window.addEventListener('load', function () {
+      window.bootstrapGlobals.ztype(480, 720, '', document.getElementById('game'));
+    });
+  </script>
+</body>
+</html>
