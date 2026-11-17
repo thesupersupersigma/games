@@ -34,5 +34,14 @@
     "tagline": "Type the words on the falling ships before they reach you",
     "tags": ["typing", "arcade"],
     "accent": "#ff9d2e"
+  },
+  {
+    "id": "freeasteroids",
+    "title": "Asteroids",
+    "path": "freeasteroids/",
+    "cover": "freeasteroids/images/asteroids-game-icon-180.png",
+    "tagline": "The classic: shoot, spin and thrust through the rocks",
+    "tags": ["arcade", "retro"],
+    "accent": "#8a9bb0"
   }
 ]
