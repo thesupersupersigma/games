@@ -1,0 +1,37 @@
+# Builds the offline download (every game, opens by double-clicking index.html) and
+# publishes it as the "offline" release, replacing the previous one, on every push to master.
+name: offline release
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: offline-release
+  cancel-in-progress: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete offline --yes --cleanup-tag || true
+          gh release create offline dist/games-offline.zip \
+            --target "$GITHUB_SHA" \
+            --title "Offline games" \
+            --notes "Every game in one zip, playable without internet. Unzip it, then double-click index.html. No server needed. Built from $GITHUB_SHA."

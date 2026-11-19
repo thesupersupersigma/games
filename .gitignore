@@ -5,3 +5,4 @@ Thumbs.db
 .DS_Store
 dist/
 tools/kawaiidra-mcp/
+dist-offline/

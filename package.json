@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && vite build --mode offline && node tools/offline.mjs",
     "preview": "vite preview",
     "test": "node src/games.test.ts"
   },

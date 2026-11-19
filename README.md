@@ -46,6 +46,18 @@ nginx.conf         static serving, gzip, caching, /healthz
 7. Add an entry to `src/games.json` so it shows up on the landing page. Only `id`, `title` and `path` are required; `cover`, `tagline`, `tags` and `accent` are optional (they are described in `src/games.ts`). `path` can also be a full `https://` URL for a game hosted somewhere else.
 8. Commit and push. Coolify rebuilds on push.
 
+## Offline download
+
+`npm run build` also writes `dist/games-offline.zip`: every game in `public/`, playable by
+unzipping and double-clicking `index.html` (no server, no internet). The landing page links
+to it, and `.github/workflows/offline-release.yml` publishes it as the `offline` GitHub
+release on every push to master.
+
+How it works: `vite build --mode offline` builds a landing page that runs from `file://`
+into `dist-offline/games/`, then `tools/offline.mjs` embeds each game's files into an
+`offline.js` that `tools/offline-shim.js` serves to the game in place of fetch/XHR/workers,
+which browsers block on `file://`. Online-only features (PolyTrack leaderboards) don't work offline.
+
 ## Local Docker test
 
 ```

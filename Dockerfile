@@ -4,7 +4,7 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
-RUN npm run build
+RUN apk add --no-cache zip && npm run build
 
 # Stage 2: serve dist/ with nginx
 FROM nginx:1.27-alpine

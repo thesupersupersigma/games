@@ -98,6 +98,7 @@ body {
   font-size: 1.125rem;
   line-height: 1.4;
 }
+.hero-lede a { color: var(--spot); font-weight: 700; text-underline-offset: 0.15em; }
 
 /* ----------------------------------------------------------------- ticker */
 .ticker { overflow: clip; background: var(--spot); color: var(--paper); border-block: var(--rule); }

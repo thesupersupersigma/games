@@ -235,6 +235,21 @@ Synthetic `keydown` events work, but remember Impact's action locks are cleared
 by `keyup`: dispatch `keyup` before the next `keydown` or the second press is
 ignored.
 
+## Offline download (`dist/games-offline.zip`)
+
+Built by `npm run build`, linked from the landing page, released by
+`.github/workflows/offline-release.yml` as the rolling `offline` release. See README.
+
+- From `file://`, Chrome blocks fetch/XHR, module scripts, `crossorigin` tags,
+  loading blob: URLs inside workers, and taints canvases with disk images.
+  `tools/offline-shim.js` answers in-folder fetch/XHR/importScripts/Worker and
+  script-set `src`s from the embedded base64; `tools/offline.mjs` strips
+  `crossorigin` and deletes the on-disk `.wasm/.data/.glb/.swf/.track` copies
+  (only ever fetched, so only the embedded copy is needed).
+- A new game that loads files some other way (e.g. CSS `url()` set from script,
+  module workers) may need the shim extended. Test the unzipped copy in Chrome
+  from `file://` with the network off before shipping.
+
 ## Other games
 
 - **PolyTrack** – v0.5.2 unofficial build. Leaderboards use an external backend;
